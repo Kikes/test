@@ -80,7 +80,7 @@ BEGIN
     END;
   DBMS_OUTPUT.PUT_LINE(v_inner_variable);
   DBMS_OUTPUT.PUT_LINE(v_outer_variable);    
-END;*/
+END;
 
 <<o_label>>
 DECLARE 
@@ -99,4 +99,45 @@ BEGIN
   o_label.v_date_of_birth := '05-08-1984'; 
   END;
   DBMS_OUTPUT.PUT_LINE('Date of Birth chg: '||v_date_of_birth);
+END;
+
+--leterale: Boolean, 'test', 1.5
+--comentarios
+--identificadores:
+--delimitadores: +,. palabras reservadas;
+*/
+<<o_lobel>>
+DECLARE 
+  v_cahr     VARCHAR2(10); 
+  v_gnumber   NUMBER (10,2);
+  c_months    CONSTANT NUMBER(10,2) := 12;
+  d_date      DATE := SYSDATE;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('outer BLOCK');
+    DBMS_OUTPUT.PUT_LINE('Using LPAD FUNCTION, '||LPAD('SH',10,'*'));
+    v_gnumber := MOD(dbms_random.random,2);
+    IF v_gnumber = 0 then 
+      DBMS_OUTPUT.PUT_LINE('Mod function result is ZERO'||v_gnumber);
+    ELSE
+      DBMS_OUTPUT.PUT_LINE('Mod function result is nor ZERO:'||v_gnumber);
+    END IF;
+    DBMS_OUTPUT.PUT_LINE('v_gnumber: '||v_gnumber);
+  DECLARE
+    v_cahr VARCHAR(10) := '26';
+    v_lnumber NUMBER(10,2);
+    
+  BEGIN
+    v_cahr := '5';
+    DBMS_OUTPUT.PUT_LINE('Inner BLOCK');
+    DBMS_OUTPUT.PUT_LINE('global variable: '||o_lobel.v_cahr);
+    o_lobel.v_cahr := v_cahr + 50;
+    DBMS_OUTPUT.PUT_LINE('global variable modify: '||v_cahr);
+    DBMS_OUTPUT.PUT_LINE('local variable modify: '||v_cahr);
+    v_cahr := v_cahr/0;
+  END;
+    
+EXCEPTION WHEN ZERO_DIVIDE THEN
+   DBMS_OUTPUT.PUT_LINE('ZERO_DIVIDE execption error: '||sqlcode||' msg: '||sqlerrm);
+WHEN OTHERS THEN
+  DBMS_OUTPUT.PUT_LINE('Other execption error: '||sqlcode|| ' msg: '||sqlerrm);
 END;
